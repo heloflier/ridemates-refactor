@@ -12,7 +12,7 @@ let bgImage = {
 
 class ResultsPage extends Component{
 	render() {	
-		console.log(this.props);
+		// console.log(this.props);
 		return(
 			<div style={bgImage} className="rm-signup-page-container">
 					<Results 

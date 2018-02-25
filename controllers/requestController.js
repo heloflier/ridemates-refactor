@@ -18,13 +18,17 @@ const _ 					= require('lodash'),
 	  emailTemplate 		= require('../services/emailTemplates/rideRequestTemplate');
 
 // TODO: get rid of this and uncomment the middleware function +++++++++++++++++++++++++++++++++++++++
+
+// if the user is logged in, return the user,
+// otherwise handle the error
 function isLoggedIn(req, res, next) {
-	console.log('in isLoggedIn =========================');
+	console.log('in requestController.js/isLoggedIn =========================');
 	if(req.isAuthenticated()) {
 		console.log('user: ', req.user);
 		return next();
 	}
 	else {
+		console.log('wohoo we found it!')
 		// res.send(401)
 	}
 };
@@ -42,16 +46,16 @@ function isLoggedIn(req, res, next) {
 //=================================================
 
 router.get('/allrequests', isLoggedIn, async (req, res) => {
-	console.log('in allrequests');
-	console.log('user: ', req.user);
-	console.log('user: ', req.user);
+	// console.log('in allrequests');
+	// console.log('user: ', req.user);
+	// console.log('user: ', req.user);
 	const requests = await Email.find({ _user: req.user.id })
 		// .select({
 			// recipients: false
 		// })
 		.then(function(results) {
-			console.log('in /api/request GET route');
-			console.log('results: ', results);
+			// console.log('in /api/request GET route');
+			// console.log('results: ', results);
 			res.json(results);
 		});
 });
@@ -61,13 +65,15 @@ router.get('/allrequests', isLoggedIn, async (req, res) => {
 //=================================================
 
 router.get('/:requestId/yes', (req, res) => {
-	console.log('in /api/request GET (thanks) route');
-	res.redirect('/confirmation');
+	// console.log('in /api/request GET (thanks) route');
+	let id = req.params.requestId
+	// res.redirect('/api/request/' + id + '/yes');
 });
 
 router.get('/:requestId/no', (req, res) => {
-	console.log('in /api/request GET (thanks) route');
-	res.redirect('/refusal');
+	// console.log('in /api/request GET (thanks) route');
+	let id = req.params.requestId
+	// res.redirect('/api/request/' + id + '/no');
 });
 
 //=================================================
@@ -83,8 +89,8 @@ router.post('/', isLoggedIn, async (req, res) => {
 	// 		error:: 'You must log in before you can send a request' 
 	// 	})
 	// }
-	console.log('email button received')
-	console.log('req.body: ', req.body)
+	// console.log('email button received')
+	// console.log('req.body: ', req.body)
 
     const email = new Email({
         title: req.body.title,
@@ -109,9 +115,9 @@ router.post('/', isLoggedIn, async (req, res) => {
 				console.log('Error response received');
 				res.send(error)
 			}
-			console.log(response.statusCode);
-			console.log(response.body);
-			console.log(response.headers);
+			// console.log(response.statusCode);
+			// console.log(response.body);
+			// console.log(response.headers);
 			res.json(response)
 	})
 	// 	saving the email to the DB
@@ -173,7 +179,7 @@ router.post('/webhooks', (req, res) => {
 		// returning the array
 		.value();
 
-	console.log(events)
+	// console.log(events)
 	res.send(200);
 
 	// saving the responses in the database

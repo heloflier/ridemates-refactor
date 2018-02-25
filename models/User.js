@@ -38,10 +38,6 @@ const UserSchema = new Schema({
 })
 
 UserSchema.plugin(passportLocalMongoose);
-// UserSchema.methods.encryptPassword = function(password) {
-	// return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-
-// }
 
 const User = mongoose.model('User', UserSchema);
 

@@ -74,7 +74,7 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
-    console.log("profile component mount");
+    // console.log("profile component mount");
 
     API.userProfile()
      .then(res => {
@@ -112,7 +112,7 @@ class Profile extends Component {
   }
 
   handleChange = name => event => {
-    console.log(name);
+    // console.log(name);
     this.setState({ [name]: event.target.value }); 
   };
 
@@ -121,9 +121,9 @@ class Profile extends Component {
   };
 
   submitChange = event => {
-    console.log('in signup submitchange')
+    // console.log('in signup submitchange')
     event.preventDefault();
-    console.log('state: ', this.state);
+    // console.log('state: ', this.state);
 
     API.createUserProfile(this.state).then((response) => {
       this.props.parent.setState({isLoggedIn: true});
@@ -131,19 +131,6 @@ class Profile extends Component {
       this.props.history.push('/');
     });
 
-    // this.setState = {
-    //   firstname: '',
-    //   lastname: '',
-    //   address: '',
-    //   city: '',
-    //   state: '',
-    //   zipcode: '',
-    //   email: '',
-    //   phonenum: '',
-    //   radius: '',
-    //   rideType: {},
-    //   difficulty: {}
-    // };
   };
 
   render() {

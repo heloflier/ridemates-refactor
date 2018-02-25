@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
 import LandingPage from './pages/landing';
+import RidesPage from './pages/rides';
 import LoginPage from './pages/login';
 import ProfilePage from './pages/profile';
 import ResultsPage from './pages/results';
@@ -45,7 +46,7 @@ class App extends Component {
   }
 
   logOutUser = event => {
-    event.preventDefault();
+    // event.preventDefault();
     API.logoutUser();
     console.log("isLoggedIn " + this.state.isLoggedIn);
     this.setState({ isLoggedIn: false});
@@ -72,6 +73,7 @@ class App extends Component {
                 </div>
                 :
                 <div>
+                  <Link to="/rides" className="rm-appbar-link"><Button className="rm-rides-button" color="contrast">My Rides</Button></Link>
                   <Link to="/profile" className="rm-appbar-link"><Button className="rm-signup-button" color="contrast">Profile</Button></Link>
                   <Button className="rm-signup-button" color="contrast" onClick={this.logOutUser}>Logout</Button>
                 </div>
@@ -85,6 +87,9 @@ class App extends Component {
             render={({ history }) => <LandingPage parent={this} history={history}
             getMatchedPeople = {this.getMatchedPeople}/>
           } 
+          />
+          <Route exact path="/rides" 
+            render={({ history }) => <RidesPage parent={this} history={history} />} 
           />
           <Route exact path="/login" 
             render={({ history }) => <LoginPage parent={this} history={history} />} 

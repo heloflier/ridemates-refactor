@@ -15,7 +15,7 @@ const express 				= require("express"),
 	  logger 				= require('morgan'),
 	  User					= require('./models/User'),
 	  path                  = require('path'),
-	  keys					= require('./config/prod');
+	  keys					= require('./config/keys');
 
 const app = express();
 
@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
-const htmlRoutes = require("./controllers/htmlController.js");
+// const htmlRoutes = require("./controllers/htmlController.js");
 const authRoutes = require("./controllers/authController.js");
 const requestRoutes = require("./controllers/requestController.js");
 const resultsRoutes = require("./controllers/resultsController.js");

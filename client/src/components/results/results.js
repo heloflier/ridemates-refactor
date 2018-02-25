@@ -86,7 +86,8 @@ class Results extends React.Component {
 			    address: '',
 			    currentUser: '',
 			    confirmationModalOpen: false,
-			    errorModalOpen: false
+				errorModalOpen: false,
+				userNotLoggedInModalOpen: false 
 			};
 		}
 			
@@ -141,42 +142,49 @@ class Results extends React.Component {
 	};
 
 	dismissModal = () => {
-		this.setState({confirmationModalOpen: false, errorModalOpen: false})
+		this.setState({ confirmationModalOpen: false, 
+						errorModalOpen: false,
+						userNotLoggedInModalOpen: false
+		})
 	};
 
 	//backend is expecting a email Object for selected people and 
 	submitChange =() => {
-		
+		console.log(' in results.js/submitChange user data: ', this.state.currentUser)
 		let recipientEmails = [];
 
-		if(this.state.checked.length > 0){
-			this.state.checked.map(id => {
-			let recipient = this.state.matchedPeople.filter((person) => { 
-				return (person._id === id);
-			})
-				recipientEmails.push(recipient[0].email);			
-			})
+		if (this.state.currentUser != "") {
+			if(this.state.checked.length > 0){
+				this.state.checked.map(id => {
+				let recipient = this.state.matchedPeople.filter((person) => { 
+					return (person._id === id);
+				})
+					recipientEmails.push(recipient[0].email);			
+				})
 
-			let recipientString  = recipientEmails.join(); 
+				let recipientString  = recipientEmails.join(); 
 
-			let emailObject = {
-				title: `Request to ride at ${this.state.where}`,
-				body: `Hello! ${this.state.currentUser.firstname} would like to ride with you. If you would like to join, please meet here: ${this.state.address}`,
-				recipients: recipientString
+				let emailObject = {
+					title: `Request to ride at ${this.state.where}`,
+					body: `Hello! ${this.state.currentUser.firstname} would like to ride with you. If you would like to join, please meet here: ${this.state.address}`,
+					recipients: recipientString
+				}
+
+				API.emailRequest(emailObject).then((response) => {
+					console.log("results checked people" + this.state.checked.length);
+					this.setState({confirmationModalOpen: true }) 
+					
+				});
+
 			}
-
-			API.emailRequest(emailObject).then((response) => {
-				console.log("results checked people" + this.state.checked.length);
-				this.setState({confirmationModalOpen: true }) 
-				
-			});
-
+			else{
+				this.setState({errorModalOpen: true }) 
+			}
+		} 
+		else {
+			// alert('wtf dude...')
+			this.setState({ userNotLoggedInModalOpen: true }) 
 		}
-		else{
-			this.setState({errorModalOpen: true }) 
-		}
-
-		
 	}
 
 
@@ -275,7 +283,18 @@ class Results extends React.Component {
 			    	<DialogTitle>No riders were selected!</DialogTitle>
 			    	<DialogContent>
 			            <DialogContentText>
-			              Please select at least one rider for us to send them an email
+			              Please select at least one rider to send them an email
+			            </DialogContentText>
+			          </DialogContent>
+			          <DialogActions>
+			            <Button color="primary" className={classes.button} onClick={this.dismissModal} >Okay</Button>
+			        </DialogActions>
+			    </Dialog> 
+				<Dialog open={this.state.userNotLoggedInModalOpen}>
+			    	<DialogTitle>You are not logged in!</DialogTitle>
+			    	<DialogContent>
+			            <DialogContentText>
+			              Please log in first to complete your request
 			            </DialogContentText>
 			          </DialogContent>
 			          <DialogActions>

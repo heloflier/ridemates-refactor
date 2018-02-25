@@ -3,6 +3,6 @@ localtunnel(4000, {
 			subdomain: 'waqasspecialwithalanandjaya'
 			},
 			function(err, tunnel) {
-				console.log('LocalTunnel running')
+				console.log('LocalTunnel running: ', tunnel.url)
 			}
 );

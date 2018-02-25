@@ -15,7 +15,8 @@ const API = {
       return axios.post("/api/signupForm", profile);
    },
    logoutUser: function() {
-      return axios.post("/api/logout");
+    //   return axios.post("/api/logout");
+      return axios.get("/api/logout");
    },
    loginUser: function({ username, password }) {
       return axios.post("/api/login", { username, password });
@@ -28,10 +29,10 @@ const API = {
       console.log('api/request -- emailObject: ', emailObject);
       return axios.post("/api/request", emailObject);
    },
-   isAuthenticated: function() {
-      console.log('API isAuthenticated');
-      return axios.get("/api/isAuthenticated");
-   },
+  //  isAuthenticated: function() {
+  //     console.log('API isAuthenticated');
+  //     return axios.get("/api/isAuthenticated");
+  //  },
    userProfile: function(){
       console.log('/api/userProfile call')
       return axios.get('/api/getUser');

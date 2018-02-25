@@ -38,32 +38,32 @@ const _ 					= require('lodash'),
 //=================================================
 
 router.post('/', (req, res) => {
-	console.log('in results');
-	console.log('req.body: ', req.body);
+	// console.log('in results');
+	// console.log('req.body: ', req.body);
 	const searchAddress = req.body.where;
 	const rideType = req.body.biketype;
 	const difficulty = req.body.difficulty;
-	console.log('searchAddress: ', searchAddress);
+	// console.log('searchAddress: ', searchAddress);
 	geocoder.geocode(searchAddress, function(err, data) {
 		if (err) throw err;
-		console.log('data.results.geometry: ', data.results[0].geometry.location);
+		// console.log('data.results.geometry: ', data.results[0].geometry.location);
 		searchCoordinates = data.results[0].geometry.location;
 		User.find({ 
 					[rideType]: true,
 					[difficulty]: true
 				 })
             .then(function(doc) {
-            	console.log('*****************************');
-            	console.log('doc: ', doc);
+            	// console.log('*****************************');
+            	// console.log('doc: ', doc);
             	let resultArray = doc.filter( user => {
             		if (user.coordinates && user.radius) {
-            			console.log('eligible user at: ', user.coordinates, 'radius: ', user.radius)
+            			// console.log('eligible user at: ', user.coordinates, 'radius: ', user.radius)
             			return getCoordinates.inRange(	user.coordinates, 
             											searchCoordinates, 
             											user.radius);
             		}
             	});
-            	console.log('resultArray: ', resultArray)
+            	// console.log('resultArray: ', resultArray)
             	let newData = { 
             			where: searchAddress,
             			results: resultArray

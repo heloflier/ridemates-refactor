@@ -56,24 +56,24 @@ class Login extends Component {
   };
 
   submitChange = (event) => {
-    console.log('in login submitchange')
+    // console.log('in login submitchange')
     event.preventDefault();
-    console.log(this);
+    // console.log(this);
     const username = this.state.username;
     const password = this.state.password;
-    console.log('name: ', username);
-    console.log('password: ', password);
-    console.log("this.props",this.props);
+    // console.log('name: ', username);
+    // console.log('password: ', password);
+    // console.log("this.props",this.props);
     API.loginUser({  username, 
                       password
     }).then((response) => {
       //this.props.handler(this.setState({isLoggedIn: true}));
-      console.log("this is this",this);
-      console.log(this.props);
-      console.log(this.props.parent);
+      // console.log("this is this",this);
+      // console.log(this.props);
+      // console.log(this.props.parent);
       // window.location.href = '/';
       this.props.parent.setState({isLoggedIn: true});
-      console.log('login this.props', this.props);
+      // console.log('login this.props', this.props);
       this.props.history.push('/');
     });
 

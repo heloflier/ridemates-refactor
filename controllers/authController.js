@@ -1,7 +1,7 @@
 //=============================================================================
 //							Login Controller
 //=============================================================================
-// checks if user is logged in and redirects accordingly
+// // checks if user is logged in and redirects accordingly
 
 const mongoose				= require('mongoose'),
 	  passportLocalMongoose = require('passport-local-mongoose'),
@@ -16,8 +16,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 router.post('/signup', (req, res) => {
-	console.log('post /signup')
-	console.log('req.body: ', req.body)
+	// console.log('post /signup')
+	// console.log('req.body: ', req.body)
 	const newUser = new User({username: req.body.username});
 	User.register(newUser, req.body.password, (err, user) => {
 		if (err) {
@@ -25,7 +25,7 @@ router.post('/signup', (req, res) => {
 			return res.send(err);
 		};
 		passport.authenticate('local')(req, res, () => {
-			console.log('signed up, past auth');
+			// console.log('signed up, past auth');
 			req.session.save((err) => {
 				if (err) {
 					return next(err);
@@ -42,15 +42,14 @@ router.post('/signupForm', (req, res) => {
 							req.body.state + " " +
 							req.body.zipcode
 							);
-	console.log('userAddress: ', userAddress);
+	// console.log('userAddress: ', userAddress);
 	
-	// getCoordinates.fromAddress(userAddress, function(err, data) {
 	geocoder.geocode(userAddress, function(err, data) {
 
-		console.log('post /signupForm')
-		console.log('req.body: ', req.user);
-		console.log(JSON.stringify(data, null, 2))
-		console.log('data.results.geometry: ', data.results[0].geometry.location);
+		// console.log('post /signupForm')
+		// console.log('req.body: ', req.user);
+		// console.log(JSON.stringify(data, null, 2))
+		// console.log('data.results.geometry: ', data.results[0].geometry.location);
 		User.findOneAndUpdate({_id: 			req.user.id}, 
               { $set: { firstname: 				req.body.firstname,
               			lastname: 				req.body.lastname,
@@ -75,36 +74,18 @@ router.post('/signupForm', (req, res) => {
 	          res.send(error);
 	        }
 	        else {
-	            console.log('past findOneAndUpdate')
+	            // console.log('past findOneAndUpdate')
 	            res.send(200)
 	        };
 	    }); 
 
 	});
-
-	// const newUser = new User({username: req.body.username});
-	// User.register(newUser, req.body.password, (err, user) => {
-	// 	if (err) {
-	// 		console.log('err: ', err);
-	// 		return res.send(err);
-	// 	};
-	// 	passport.authenticate('local')(req, res, () => {
-	// 		console.log('signed up, past auth');
-	// 		req.session.save((err) => {
-	// 			if (err) {
-	// 				return next(err);
-	// 			}
-	// 			res.redirect('/');
-	// 		})
-	// 	});
-	// });
 });
 
-router.post(
-    "/login",
+router.post("/login",
     passport.authenticate("local", { failureRedirect: "/signup" }),
     (req, res, next) => {
-        console.log("successfully logged in.");
+        // console.log("successfully logged in.");
         req.session.save(err => {
             if (err) {
                 return next(err);
@@ -115,20 +96,20 @@ router.post(
 );
 
 router.get('/logout', (req, res) => {
-	console.log('post /logout')
+	console.log('get /logout')
 	req.logout();
 	console.log('you are logged out');
 	res.redirect('/')
 });
 
 router.get('/isAuthenticated', (req, res) => {
-	console.log('get /isAuthenticated');
+	// console.log('get /isAuthenticated');
 	res.json(true);
 });
 
 router.get('/getUser', (req, res) => {
-	console.log('get /getUser works');
-	console.log(req.user);
+	// console.log('get /getUser works');
+	// console.log(req.user);
 	res.json(req.user);
 });
 

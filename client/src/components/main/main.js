@@ -67,7 +67,7 @@ class Main extends Component {
   submitChange = (event, where, biketype, difficulty) => {
     event.preventDefault();
 
-    console.log("in signup submitchange");
+    // console.log("in signup submitchange");
     const searchObj = this.state;
 
     if(this.state.biketype === "Road Bike") {
@@ -91,7 +91,7 @@ class Main extends Component {
     };
 
     API.results(searchObj).then(res => {
-      console.log("res: ", res);
+      // console.log("res: ", res);
       //window.location = res.request.responseURL;
       // debugger;
       this.props.parent.setState({result: res.data, receivedData: true})
