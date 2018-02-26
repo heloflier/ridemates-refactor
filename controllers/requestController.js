@@ -148,7 +148,9 @@ router.post('/webhooks', (req, res) => {
 	// and constructing a new array
 	const responsePath = new Path('/api/request/:requestId/:choice');
 	const events = _.chain(req.body)
-		.map(({ email, url }) => {			
+		.map(({ email, url }) => {
+			console.log('email: =========== ', email);			
+			console.log('url: =========== ', url);			
 			const match = responsePath.test(new URL(url).pathname);
 			if (match) {
 				return { email,
@@ -179,7 +181,7 @@ router.post('/webhooks', (req, res) => {
 		// returning the array
 		.value();
 
-	// console.log(events)
+	console.log('events: -------------', events)
 	res.send(200);
 
 	// saving the responses in the database

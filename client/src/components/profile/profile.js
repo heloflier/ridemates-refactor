@@ -55,7 +55,7 @@ class Profile extends Component {
   //const bull = <span className={classes.bullet}>•</span>;
 
   state = {
-    username: 'carne asada fries',
+    username: 'carne asada fries with pork',
     firstname: '',
     lastname: '',
     address: '',
@@ -121,9 +121,9 @@ class Profile extends Component {
   };
 
   submitChange = event => {
-    // console.log('in signup submitchange')
+    console.log('in signup submitchange')
     event.preventDefault();
-    // console.log('state: ', this.state);
+    console.log('state: ', this.state);
 
     API.createUserProfile(this.state).then((response) => {
       this.props.parent.setState({isLoggedIn: true});
